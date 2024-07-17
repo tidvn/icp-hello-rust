@@ -1,4 +1,5 @@
 [workspace]
-members = ["src/icp_hello_world_rust_backend"]
-
+members = [
+    "src/hello_rust_backend"
+]
 resolver = "2"

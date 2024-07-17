@@ -1,22 +1,19 @@
 {
   "canisters": {
-    "icp_hello_world_rust_backend": {
-      "candid": "src/icp_hello_world_rust_backend/icp_hello_world_rust_backend.did",
-      "package": "icp_hello_world_rust_backend",
+    "hello_rust_backend": {
+      "candid": "src/hello_rust_backend/hello_rust_backend.did",
+      "package": "hello_rust_backend",
       "type": "rust"
     },
-    "icp_hello_world_rust_frontend": {
+    "hello_rust_frontend": {
       "dependencies": [
-        "icp_hello_world_rust_backend"
+        "hello_rust_backend"
       ],
-      "frontend": {
-        "entrypoint": "src/icp_hello_world_rust_frontend/src/index.html"
-      },
       "source": [
-        "src/icp_hello_world_rust_frontend/assets",
-        "dist/icp_hello_world_rust_frontend/"
+        "src/hello_rust_frontend/dist"
       ],
-      "type": "assets"
+      "type": "assets",
+      "workspace": "hello_rust_frontend"
     }
   },
   "defaults": {

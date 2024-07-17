@@ -1,51 +1,10 @@
-# ICP Hello World Rust
+# hello_rust
 
-This repository provides a quick and easy way to start developing a canister smart contract for the [Internet Computer](https://internetcomputer.org/) in Rust.
-The repository can be used with macOS, Windows or Linux.
+Welcome to your new hello_rust project and to the internet computer development community. By default, creating a new project adds this README and some template files to your project directory. You can edit these template files to customize your project and to include your own code to speed up the development cycle.
 
-## Getting Started
+To get started, you might want to explore the project directory structure and the default configuration file. Working with this project in your development environment will not affect any production deployment or identity tokens.
 
-To get started with Gitpod, click the button below:
-
-[![Open in Gitpod](https://gitpod.io/button/open-in-gitpod.svg)](https://gitpod.io/#https://github.com/dfinity/icp-hello-world-rust)
-
-If you rather want to use GitHub Codespaces, click this button instead:
-
-[![Open in GitHub Codespaces](https://github.com/codespaces/badge.svg)](https://codespaces.new/dfinity/icp-hello-world-rust?quickstart=1)
-
-If you prefer running VS Code locally and not in the browser, click "Codespaces: ..." or "Gitpod" in the bottom left corner and select "Open in VS Code" in the menu that appears. 
-If prompted, proceed by installing the recommended plugins for VS Code.
-
-### Running your Project
-
-After the IDE has opened, run `dfx deploy` in the terminal to deploy the frontend and backend. 
-Click on the first green link at the end of the output to see your canister's frontend in the browser.
-To interact with the backend canister, click on the second green link.
-**NOTE**: When developing in GitHub Codespaces, run `./scripts/canister_urls.py` and use the links that are shown there.
-
-For interactive development of the frontend canister, you can also start a node server by running `npm start`.
-You can find your canister's frontend running under http://localhost:8080.
-
-If you make changes to the backend canister, remember to call `dfx deploy` first; it suffices to reload the frontend canister's webpage to reflect the changes you've made.
-If your environment was restarted or has been inactive over some time, you might need to run `dfx start --background` before running `dfx deploy`.
-
-## Testing your Project
-
-To run the [integration tests](/src/icp_hello_world_rust_backend/tests/integration_tests.rs#L18) for your backend canister, first run `dfx build` to build the canister Wasm, and then `cargo test --test integration_tests`.
-If the canisters have not yet been created, run `dfx canister create --all` before `dfx build`.
-
-## Local Development
-
-If you prefer to develop locally, first install [Docker](https://www.docker.com/get-started/) and [VS Code](https://code.visualstudio.com/) and start them on your machine.
-Next, click the following button to open the dev container locally:
-
-[![Open locally in Dev Containers](https://img.shields.io/static/v1?label=Dev%20Containers&message=Open&color=blue&logo=visualstudiocode)](https://vscode.dev/redirect?url=vscode://ms-vscode-remote.remote-containers/cloneInVolume?url=https://github.com/dfinity/icp-hello-world-rust)
-
-If prompted, install the required/recommended plugins for VS Code.
-
-## Documentation and Guides
-
-To learn more before you start working on this project, see the following documentation available online:
+To learn more before you start working with hello_rust, see the following documentation available online:
 
 - [Quick Start](https://internetcomputer.org/docs/current/developer-docs/setup/deploy-locally)
 - [SDK Developer Tools](https://internetcomputer.org/docs/current/developer-docs/setup/install)
@@ -54,9 +13,49 @@ To learn more before you start working on this project, see the following docume
 - [ic-cdk-macros](https://docs.rs/ic-cdk-macros)
 - [Candid Introduction](https://internetcomputer.org/docs/current/developer-docs/backend/candid/)
 
-If you want to start working on your project right away, you might want to try the following commands to familiarize yourself with `dfx`:
+If you want to start working on your project right away, you might want to try the following commands:
 
 ```bash
+cd hello_rust/
 dfx help
 dfx canister --help
 ```
+
+## Running the project locally
+
+If you want to test your project locally, you can use the following commands:
+
+```bash
+# Starts the replica, running in the background
+dfx start --background
+
+# Deploys your canisters to the replica and generates your candid interface
+dfx deploy
+```
+
+Once the job completes, your application will be available at `http://localhost:4943?canisterId={asset_canister_id}`.
+
+If you have made changes to your backend canister, you can generate a new candid interface with
+
+```bash
+npm run generate
+```
+
+at any time. This is recommended before starting the frontend development server, and will be run automatically any time you run `dfx deploy`.
+
+If you are making frontend changes, you can start a development server with
+
+```bash
+npm start
+```
+
+Which will start a server at `http://localhost:8080`, proxying API requests to the replica at port 4943.
+
+### Note on frontend environment variables
+
+If you are hosting frontend code somewhere without using DFX, you may need to make one of the following adjustments to ensure your project does not fetch the root key in production:
+
+- set`DFX_NETWORK` to `ic` if you are using Webpack
+- use your own preferred method to replace `process.env.DFX_NETWORK` in the autogenerated declarations
+  - Setting `canisters -> {asset_canister_id} -> declarations -> env_override to a string` in `dfx.json` will replace `process.env.DFX_NETWORK` with the string in the autogenerated declarations
+- Write your own `createActor` constructor
